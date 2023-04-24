@@ -1,0 +1,62 @@
+
+<div class="container">
+  <form id='people-search'>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name" placeholder="Name">
+      <input type="submit" class="btn btn-primary" value="Search">
+    </div>
+  </form>
+
+  <div class="card-columns">
+  </div>
+
+  
+</div>
+
+<script>
+  // on page load, fetch results async from /people.json and update the DOM with the results
+  document.addEventListener("DOMContentLoaded", function(event) {
+    const peopleContainer = document.querySelector('.card-columns');  
+    
+    fetch('api/people.json')
+      .then(response => response.json())
+      .then(data => {
+        peopleContainer.innerHTML = data.map(person => {
+          return `
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">${person.name} (${person.age} old)</h5>
+                <img class="card-img-top" src="https://i.pravatar.cc/100?u=${person.id}" alt="Card image cap">
+              </div>
+            </div>
+          `
+        }).join('');
+      });
+  });
+
+  // on form submit, fetch results async from /people.json and update the DOM with the results
+
+  const form = document.querySelector('#people-search');
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    const name = document.querySelector('#name').value;
+    const peopleContainer = document.querySelector('.card-columns');  
+    
+    fetch(`api/people.json?name=${name}`)
+      .then(response => response.json())
+      .then(data => {
+        peopleContainer.innerHTML = data.map(person => {
+          return `
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">${person.name} (${person.age} old)</h5>
+                <img class="card-img-top" src="https://i.pravatar.cc/100?u=${person.id}" alt="Card image cap">
+              </div>
+            </div>
+          `
+        }).join('');
+      });
+  });
+
+</script>
