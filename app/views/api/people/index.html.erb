@@ -1,0 +1,9 @@
+
+<% @people.each do |person| %>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title"><%= person.name %> (<%= person.age %> old)</h5>
+      <img class="card-img-top" src="https://i.pravatar.cc/100?u=<%= person.id %>" alt="Card image cap">
+    </div>
+  </div>
+<% end %>
